@@ -37,16 +37,16 @@ const CURRENCY_LIST = [
 ];
 
 export default function CurrencySelect({label, currency, handleCurrency}) {
-  const id = '_' + Math.random().toString(36).substr(2, 9);
-
   return (
       <div className="currency-drop-down">
-        <label htmlFor={id}>{label}: </label>
-        <select defaultValue={currency} id={id} onChange={handleCurrency}>{
-          CURRENCY_LIST.map((obj) => {
-            return <option key={obj.id} value={obj.id}>{obj.name}</option>
-          })
-        }</select>
+        <label>
+          {label}:{' '}
+          <select defaultValue={currency} onChange={handleCurrency}>{
+            CURRENCY_LIST.map((obj) => {
+              return <option key={obj.id} value={obj.id}>{obj.name}</option>
+            })
+          }</select>
+        </label>
       </div>
   )
 }
