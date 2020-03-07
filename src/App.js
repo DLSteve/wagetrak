@@ -8,6 +8,7 @@ import CurrencySelect from './components/CurrencySelect'
 function App() {
   const [baseCurrency, setBaseCurrency] = useState('USD');
   const [convertedCurrency, setConvertedCurrency] = useState('USD');
+  const [running, setRunning] = useState(false);
   const [rate, setRate] = useState(20.00);
   const [seconds, setSeconds] = React.useState(0);
   const [currentAmount, setCurrentAmount] = useState(0);
@@ -63,13 +64,15 @@ function App() {
           </div>
           <div className="counter-controls">
             <h3>Controls:</h3>
-            <button onClick={() => {
+            <button disabled={running} onClick={() => {
               // noinspection JSValidateTypes
               counterRef.current = requestAnimationFrame(update);
+              setRunning(true)
             }}>Start</button>
-            <button onClick={() => {
+            <button disabled={!running} onClick={() => {
               cancelAnimationFrame(counterRef.current);
               previousTimeRef.current = null;
+              setRunning(false)
             }}>Stop</button>
             <button onClick={() => {
               setCurrentAmount(0);
@@ -78,6 +81,7 @@ function App() {
               counterRef.current = null;
               previousTimeRef.current = null;
               millisecondsRef.current = 0
+              setRunning(false)
             }}>Reset</button>
           </div>
         </div>
