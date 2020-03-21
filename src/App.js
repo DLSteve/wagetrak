@@ -5,11 +5,19 @@ import './App.css';
 import CurrentAmountCounter from './components/CurrentAmountCounter';
 import CurrencySelect from './components/CurrencySelect'
 
+async function fetchExchangeRate(base, exchange) {
+  const response = await fetch(`https://api.exchangeratesapi.io/latest?base=${base}&symbols=${exchange}`, {
+    credentials: 'omit'
+  });
+  return await response.json();
+}
+
 function App() {
   const [baseCurrency, setBaseCurrency] = useState('USD');
-  const [convertedCurrency, setConvertedCurrency] = useState('USD');
+  const [exchangeCurrency, setExchangeCurrency] = useState('USD');
   const [running, setRunning] = useState(false);
   const [rate, setRate] = useState(20.00);
+  const [exchangeRate, setExchangeRate] = useState(1);
   const [seconds, setSeconds] = React.useState(0);
   const [currentAmount, setCurrentAmount] = useState(0);
 
@@ -18,11 +26,22 @@ function App() {
   const millisecondsRef = useRef(0);
 
   const handleBaseCurrency = event => {
-    setBaseCurrency(event.target.value);
+    let base = event.target.value;
+    setBaseCurrency(base);
+    updateExchangeRate(base, exchangeCurrency)
   };
 
-  const handleConvertedCurrency = event => {
-    setConvertedCurrency(event.target.value);
+  const handleExchangedCurrency = event => {
+    let exchange = event.target.value;
+    setExchangeCurrency(exchange);
+    updateExchangeRate(baseCurrency, exchange)
+  };
+
+  const updateExchangeRate = (base, exchange) => {
+    fetchExchangeRate(base, exchange)
+        .then((data) => {
+          setExchangeRate(data.rates[exchange]);
+        })
   };
 
   const update = time => {
@@ -43,9 +62,10 @@ function App() {
   };
 
   useEffect(() => {
-    const ratePerSecond = rate / 3600;
-    setCurrentAmount(ratePerSecond * seconds)
-  }, [rate, seconds]);
+    const adjustedRate = rate * exchangeRate;
+    const ratePerSecond = adjustedRate / 3600;
+    setCurrentAmount(ratePerSecond * Math.floor(seconds))
+  }, [exchangeRate, rate, seconds]);
 
   return (
       <div className="App">
@@ -55,11 +75,11 @@ function App() {
             <label htmlFor="pay-rate">Hourly Pay Rate: </label>
             <input type="number" id="pay-rate" name="tentacles" min="0" defaultValue={rate} onChange={event => setRate(parseInt(event.target.value, 10))} />
             <CurrencySelect label="Base Currency" currency={baseCurrency} handleCurrency={handleBaseCurrency}/>
-            <CurrencySelect label="Converted Currency" currency={convertedCurrency} handleCurrency={handleConvertedCurrency}/>
+            <CurrencySelect label="Converted Currency" currency={exchangeCurrency} handleCurrency={handleExchangedCurrency}/>
           </div>
           <div className="current-amount">
             <h3>Current:</h3>
-            <CurrentAmountCounter currency={convertedCurrency} value={currentAmount}/>
+            <CurrentAmountCounter currency={exchangeCurrency} value={currentAmount}/>
             <div>Seconds: {Math.floor(seconds)}</div>
           </div>
           <div className="counter-controls">
