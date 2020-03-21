@@ -80,7 +80,7 @@ function App() {
               setSeconds(0);
               counterRef.current = null;
               previousTimeRef.current = null;
-              millisecondsRef.current = 0
+              millisecondsRef.current = 0;
               setRunning(false)
             }}>Reset</button>
           </div>
