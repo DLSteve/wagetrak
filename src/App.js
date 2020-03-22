@@ -1,4 +1,5 @@
 import React, {useState, useRef, useEffect} from 'react';
+import useSecondTimer from "./hooks/useSecondTimer";
 
 import './App.css';
 
@@ -15,15 +16,17 @@ async function fetchExchangeRate(base, exchange) {
 function App() {
   const [baseCurrency, setBaseCurrency] = useState('USD');
   const [exchangeCurrency, setExchangeCurrency] = useState('USD');
-  const [running, setRunning] = useState(false);
   const [rate, setRate] = useState(20.00);
   const [exchangeRate, setExchangeRate] = useState(1);
-  const [seconds, setSeconds] = React.useState(0);
   const [currentAmount, setCurrentAmount] = useState(0);
 
-  const counterRef = useRef();
-  const previousTimeRef = useRef(null);
-  const millisecondsRef = useRef(0);
+  const {
+    running,
+    seconds,
+    startTimer,
+    stopTimer,
+    resetTimer
+  } = useSecondTimer();
 
   const handleBaseCurrency = event => {
     let base = event.target.value;
@@ -42,23 +45,6 @@ function App() {
         .then((data) => {
           setExchangeRate(data.rates[exchange]);
         })
-  };
-
-  const update = time => {
-    if (previousTimeRef?.current) {
-      const deltaTime = time - previousTimeRef.current;
-
-      if(millisecondsRef.current >= 1000) {
-        setSeconds(prevSeconds => prevSeconds + (millisecondsRef.current / 1000));
-        millisecondsRef.current = 0;
-      }
-
-      millisecondsRef.current = millisecondsRef.current + deltaTime;
-    }
-    previousTimeRef.current = time;
-
-    // noinspection JSValidateTypes
-    counterRef.current = requestAnimationFrame(update);
   };
 
   useEffect(() => {
@@ -85,23 +71,14 @@ function App() {
           <div className="counter-controls">
             <h3>Controls:</h3>
             <button disabled={running} onClick={() => {
-              // noinspection JSValidateTypes
-              counterRef.current = requestAnimationFrame(update);
-              setRunning(true)
+              startTimer()
             }}>Start</button>
             <button disabled={!running} onClick={() => {
-              cancelAnimationFrame(counterRef.current);
-              previousTimeRef.current = null;
-              setRunning(false)
+              stopTimer()
             }}>Stop</button>
             <button onClick={() => {
               setCurrentAmount(0);
-              cancelAnimationFrame(counterRef.current);
-              setSeconds(0);
-              counterRef.current = null;
-              previousTimeRef.current = null;
-              millisecondsRef.current = 0;
-              setRunning(false)
+              resetTimer()
             }}>Reset</button>
           </div>
         </div>
