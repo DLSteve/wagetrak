@@ -69,13 +69,9 @@ export default function EarningsTimer() {
         </div>
         <div className="counter-controls">
           <h3>Controls:</h3>
-          <button disabled={running} onClick={() => {
-            startTimer()
-          }}>Start
+          <button disabled={running} onClick={startTimer}>Start
           </button>
-          <button disabled={!running} onClick={() => {
-            stopTimer()
-          }}>Stop
+          <button disabled={!running} onClick={stopTimer}>Stop
           </button>
           <button onClick={() => {
             setCurrentAmount(0);

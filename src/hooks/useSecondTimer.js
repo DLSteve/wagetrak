@@ -1,4 +1,4 @@
-import {useState, useRef} from 'react';
+import {useState, useRef, useCallback} from 'react';
 
 export default function useSecondTimer(initSeconds = 0) {
   const [seconds, setSeconds] = useState(initSeconds);
@@ -8,7 +8,7 @@ export default function useSecondTimer(initSeconds = 0) {
   const previousTimeRef = useRef(null);
   const millisecondsRef = useRef(0);
 
-  const update = time => {
+  const update = useCallback(time => {
     if (previousTimeRef?.current) {
       const deltaTime = time - previousTimeRef.current;
 
@@ -23,7 +23,7 @@ export default function useSecondTimer(initSeconds = 0) {
 
     // noinspection JSValidateTypes
     counterRef.current = requestAnimationFrame(update);
-  };
+  }, []);
 
   const startTimer = () => {
     // noinspection JSValidateTypes
