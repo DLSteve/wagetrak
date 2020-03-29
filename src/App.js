@@ -1,6 +1,6 @@
 import React from 'react';
 import EarningsTimer from "./components/EarningsTimer";
-import './App.css';
+import './App.scss';
 
 function App() {
   return (

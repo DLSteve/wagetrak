@@ -38,14 +38,18 @@ const CURRENCY_LIST = [
 
 export default function CurrencySelect({label, currency, handleCurrency}) {
   return (
-      <div className="currency-drop-down">
-        <label>
-          {label}:{' '}
-          <select defaultValue={currency} onChange={handleCurrency}>{
-            CURRENCY_LIST.map((obj) => {
-              return <option key={obj.id} value={obj.id}>{obj.name}</option>
-            })
-          }</select>
+      <div className="field">
+        <label className="label">
+          {label}
+          <div className="control is-expanded">
+            <div className="select">
+              <select defaultValue={currency} onChange={handleCurrency}>{
+                CURRENCY_LIST.map((obj) => {
+                  return <option key={obj.id} value={obj.id}>{obj.name}</option>
+                })
+              }</select>
+            </div>
+          </div>
         </label>
       </div>
   )
