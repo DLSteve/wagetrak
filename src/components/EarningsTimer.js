@@ -31,6 +31,7 @@ export default function EarningsTimer() {
               <h2 className="title">Current</h2>
               <CurrentAmountCounter currency={options.exchangeCurrency} value={currentAmount}/>
               <div>Seconds: {Math.floor(seconds)}</div>
+              <div>Exchange Rate: {options.exchangeRate}</div>
             </div>
           </section>
         </div>
