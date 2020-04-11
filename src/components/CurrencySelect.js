@@ -1,4 +1,5 @@
 import React from 'react';
+import {Field, Label, Control, Select} from "rbx";
 
 const CURRENCY_LIST = [
   {"id": "USD", "name": "USD - United States dollar"},
@@ -38,19 +39,17 @@ const CURRENCY_LIST = [
 
 export default function CurrencySelect({label, currency, handleCurrency}) {
   return (
-      <div className="field">
-        <label className="label">
-          {label}
-          <div className="control is-expanded">
-            <div className="select">
-              <select defaultValue={currency} onChange={handleCurrency}>{
-                CURRENCY_LIST.map((obj) => {
-                  return <option key={obj.id} value={obj.id}>{obj.name}</option>
-                })
-              }</select>
-            </div>
-          </div>
-        </label>
-      </div>
+      <Field>
+        <Label>{label}</Label>
+        <Control>
+          <Select.Container>
+            <Select defaultValue={currency} onChange={handleCurrency}>{
+              CURRENCY_LIST.map((obj) => {
+                return <Select.Option key={obj.id} value={obj.id}>{obj.name}</Select.Option>
+              })
+            }</Select>
+          </Select.Container>
+        </Control>
+      </Field>
   )
 }
