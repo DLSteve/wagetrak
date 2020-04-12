@@ -20,7 +20,7 @@ export default function SiteNav() {
           <Navbar.Segment align="end">
             <Navbar.Item>
               <Button.Group>
-                <Button color="link">
+                <Button color="secondary">
                   <strong>Sign up</strong>
                 </Button>
                 <Button color="light">Log in</Button>
