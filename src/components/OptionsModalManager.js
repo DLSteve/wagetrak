@@ -1,5 +1,7 @@
 import React, {useState} from "react";
-import {Modal, Button, Delete} from "rbx";
+import {Modal, Button, Delete, Icon} from "rbx";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faCog} from '@fortawesome/free-solid-svg-icons'
 
 export default function OptionsModalManager({onOpen, onClose, onSave, children}) {
   const [active, setActive] = useState(false);
@@ -21,7 +23,11 @@ export default function OptionsModalManager({onOpen, onClose, onSave, children})
 
   return (
       <>
-        <Button color="primary" onClick={handleOpen}>Options</Button>
+        <Button size="small" onClick={handleOpen}>
+          <Icon size="small">
+            <FontAwesomeIcon icon={faCog} />
+          </Icon>
+        </Button>
         {active && (
             <Modal active onClose={handleClose}>
               <Modal.Background/>

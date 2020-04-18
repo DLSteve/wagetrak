@@ -1,12 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import useSecondTimer from "../hooks/useSecondTimer";
-import useTimerOptions from '../hooks/useTimerOptions'
+import {Column, Box, Button, Icon, Block, Heading} from 'rbx';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faUndo, faPlay, faStop} from '@fortawesome/free-solid-svg-icons'
 
+import useSecondTimer from '../hooks/useSecondTimer';
+import useTimerOptions from '../hooks/useTimerOptions'
 import CurrentAmountCounter from './CurrentAmountCounter';
 import TimerOptions from './TimerOptions'
 
 
-export default function EarningsTimer() {
+export default function EarningsTimer({timerName = "No Name"}) {
   const [currentAmount, setCurrentAmount] = useState(0);
   const options = useTimerOptions({});
   const {
@@ -24,40 +27,40 @@ export default function EarningsTimer() {
   }, [options.exchangeRate, options.rate, seconds]);
 
   return (
-      <div className="columns">
-        <div className="column">
-          <section className="section">
-            <div className="container">
-              <h2 className="title">Current</h2>
-              <CurrentAmountCounter currency={options.exchangeCurrency} value={currentAmount}/>
-              <div>Seconds: {Math.floor(seconds)}</div>
-              <div>Exchange Rate: {options.exchangeRate}</div>
-            </div>
-          </section>
-        </div>
-        <div className="column">
-          <section className="section">
-            <div className="container">
-              <h3 className="title">Options</h3>
+      <Column desktop={{size: 3}} fullhd={{size: 2}}>
+        <Box>
+          <Block>
+            <Heading>{timerName}</Heading>
+            <CurrentAmountCounter currency={options.exchangeCurrency} value={currentAmount}/>
+            <div>Seconds: {Math.floor(seconds)}</div>
+            <div>Exchange Rate: {options.exchangeRate}</div>
+          </Block>
+          <Block>
+            <Button.Group>
+              {running
+                  ? <Button size="small" onClick={stopTimer}>
+                    <Icon size="small">
+                      <FontAwesomeIcon icon={faStop}/>
+                    </Icon>
+                  </Button>
+                  : <Button size="small" onClick={startTimer}>
+                    <Icon size="small">
+                      <FontAwesomeIcon icon={faPlay}/>
+                    </Icon>
+                  </Button>}
+              <Button size="small"
+                      onClick={() => {
+                        setCurrentAmount(0);
+                        resetTimer()
+                      }}>
+                <Icon size="small">
+                  <FontAwesomeIcon icon={faUndo}/>
+                </Icon>
+              </Button>
               <TimerOptions {...options} />
-            </div>
-          </section>
-          <section className="section">
-            <div className="container">
-              <h3 className="title">Controls</h3>
-              <div className="buttons">
-                <button className="button is-success" disabled={running} onClick={startTimer}>Start</button>
-                <button className="button is-danger" disabled={!running} onClick={stopTimer}>Stop</button>
-                <button className="button is-info"
-                        onClick={() => {
-                          setCurrentAmount(0);
-                          resetTimer()
-                        }}>Reset
-                </button>
-              </div>
-            </div>
-          </section>
-        </div>
-      </div>
+            </Button.Group>
+          </Block>
+        </Box>
+      </Column>
   );
 }
