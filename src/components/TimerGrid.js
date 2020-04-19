@@ -17,15 +17,11 @@ export default function TimerGrid() {
     setTimerCount(timerCount + 1)
   }, [timerCount, timers])
 
-  const handleDelete = useCallback(id => {
-    setTimers(timers.filter(t => t.id !== id))
-  }, [timers])
-
   return (
       <Section>
         <Column.Group vcentered multiline>
-          {timers.map(t => (
-            <EarningsTimer key={t.id} id={t.id} onDelete={handleDelete} timerName={t.name}/>
+          {timers && timers.map(t => (
+            <EarningsTimer key={t.id} id={t.id} onDelete={setTimers} timerName={t.name}/>
           ))}
           <Column desktop={{size: 3}} fullhd={{size: 2}}>
             <Button.Group align="centered">

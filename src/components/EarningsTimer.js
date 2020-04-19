@@ -26,7 +26,7 @@ const EarningsTimer = memo(({id, onDelete, timerName = "No Name"}) => {
     setCurrentAmount(ratePerSecond * Math.floor(seconds))
   }, [options.exchangeRate, options.rate, seconds]);
 
-  console.log("render")
+  console.log("render " + id)
 
   return (
       <Column desktop={{size: 3}} fullhd={{size: 2}}>
@@ -61,7 +61,7 @@ const EarningsTimer = memo(({id, onDelete, timerName = "No Name"}) => {
               </Button>
               <TimerOptions {...options} />
               <Button color="danger" size="small"
-                      onClick={() => onDelete(id)}>
+                      onClick={() => onDelete((timers) => timers.filter(t => t.id !== id))}>
                 <Icon size="small">
                   <FontAwesomeIcon icon={faTrashAlt}/>
                 </Icon>
