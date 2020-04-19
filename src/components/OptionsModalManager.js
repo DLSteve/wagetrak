@@ -1,10 +1,10 @@
-import React, {useState} from "react";
-import {Modal, Button, Delete, Icon} from "rbx";
+import React, {useState} from 'react'
+import {Modal, Button, Delete, Icon} from 'rbx'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faCog} from '@fortawesome/free-solid-svg-icons'
 
 export default function OptionsModalManager({onOpen, onClose, onSave, children}) {
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(false)
 
   const handleOpen = () => {
     onOpen()

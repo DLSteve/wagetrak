@@ -1,43 +1,43 @@
-import React, {useState, useCallback} from 'react';
-import {Container, Field, Label, Control, Input} from "rbx";
+import React, {useState, useCallback} from 'react'
+import {Container, Field, Label, Control, Input} from 'rbx'
 
-import CurrencySelect from "./CurrencySelect";
+import CurrencySelect from './CurrencySelect'
 import OptionsModalManager from './OptionsModalManager'
 
 export default function TimerOptions({baseCurrency, setBaseCurrency, exchangeCurrency, setExchangeCurrency, rate, setRate, updateExchangeRate}) {
-  const [tempBaseCurrency, setTempBaseCurrency] = useState(baseCurrency);
-  const [tempExchangeCurrency, setTempExchangeCurrency] = useState(exchangeCurrency);
-  const [tempRate, setTempRate] = useState(rate);
+  const [tempBaseCurrency, setTempBaseCurrency] = useState(baseCurrency)
+  const [tempExchangeCurrency, setTempExchangeCurrency] = useState(exchangeCurrency)
+  const [tempRate, setTempRate] = useState(rate)
 
   const handleBaseCurrency = event => {
-    let base = event.target.value;
-    setTempBaseCurrency(base);
+    let base = event.target.value
+    setTempBaseCurrency(base)
   };
 
   const handleExchangedCurrency = event => {
-    let exchange = event.target.value;
-    setTempExchangeCurrency(exchange);
+    let exchange = event.target.value
+    setTempExchangeCurrency(exchange)
   };
 
   const openModal = useCallback(() => {
-    setTempBaseCurrency(baseCurrency);
-    setTempExchangeCurrency(exchangeCurrency);
-    setTempRate(rate);
-  }, [baseCurrency, exchangeCurrency, rate]);
+    setTempBaseCurrency(baseCurrency)
+    setTempExchangeCurrency(exchangeCurrency)
+    setTempRate(rate)
+  }, [baseCurrency, exchangeCurrency, rate])
 
   const closeModal = () => {
-    setTempBaseCurrency('');
-    setTempExchangeCurrency('');
-    setTempRate(0);
+    setTempBaseCurrency('')
+    setTempExchangeCurrency('')
+    setTempRate(0)
   };
 
   const closeModalAndSave = useCallback(() => {
-    setBaseCurrency(tempBaseCurrency);
-    setExchangeCurrency(tempExchangeCurrency);
-    setRate(tempRate);
-    updateExchangeRate(tempBaseCurrency, tempExchangeCurrency);
+    setBaseCurrency(tempBaseCurrency)
+    setExchangeCurrency(tempExchangeCurrency)
+    setRate(tempRate)
+    updateExchangeRate(tempBaseCurrency, tempExchangeCurrency)
     closeModal()
-  }, [setBaseCurrency, setExchangeCurrency, setRate, tempBaseCurrency, tempExchangeCurrency, tempRate, updateExchangeRate]);
+  }, [setBaseCurrency, setExchangeCurrency, setRate, tempBaseCurrency, tempExchangeCurrency, tempRate, updateExchangeRate])
 
   return (
       <OptionsModalManager onOpen={openModal} onClose={closeModal} onSave={closeModalAndSave}>

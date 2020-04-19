@@ -1,5 +1,5 @@
-import React from "react";
-import {Navbar, Button} from "rbx";
+import React from 'react'
+import {Navbar, Button} from 'rbx'
 
 export default function SiteNav() {
   return (

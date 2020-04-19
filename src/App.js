@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 
 import SiteNav from './components/SiteNav'
 import TimerGrid from './components/TimerGrid'
-import './App.scss';
+import './App.scss'
 
 function App() {
   return (
@@ -13,4 +13,4 @@ function App() {
   );
 }
 
-export default App;
+export default App

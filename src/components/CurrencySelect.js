@@ -1,5 +1,5 @@
-import React from 'react';
-import {Field, Label, Control, Select} from "rbx";
+import React from 'react'
+import {Field, Label, Control, Select} from 'rbx'
 
 const CURRENCY_LIST = [
   {"id": "USD", "name": "USD - United States dollar"},
@@ -35,7 +35,7 @@ const CURRENCY_LIST = [
   {"id": "SGD", "name": "SGD - Singapore Dollar"},
   {"id": "THB", "name": "THB - Thai Baht"},
   {"id": "ZAR", "name": "ZAR - South African Rand"}
-];
+]
 
 export default function CurrencySelect({label, currency, handleCurrency}) {
   return (
