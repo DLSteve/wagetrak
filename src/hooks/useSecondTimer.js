@@ -1,4 +1,4 @@
-import {useState, useRef, useCallback} from 'react';
+import {useState, useRef, useCallback, useEffect} from 'react';
 
 export default function useSecondTimer(initSeconds = 0) {
   const [seconds, setSeconds] = useState(initSeconds);
@@ -24,6 +24,14 @@ export default function useSecondTimer(initSeconds = 0) {
     // noinspection JSValidateTypes
     counterRef.current = requestAnimationFrame(update);
   }, []);
+
+  // Cleans up counter if the time is deleted while running.
+  useEffect(() => {
+    return () => {
+      const counter = counterRef.current
+      cancelAnimationFrame(counter)
+    }
+  }, [])
 
   const startTimer = () => {
     // noinspection JSValidateTypes

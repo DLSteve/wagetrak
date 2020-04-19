@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Column, Box, Button, Icon, Block, Heading} from 'rbx';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faUndo, faPlay, faStop} from '@fortawesome/free-solid-svg-icons'
+import {faUndo, faPlay, faStop, faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 
 import useSecondTimer from '../hooks/useSecondTimer';
 import useTimerOptions from '../hooks/useTimerOptions'
@@ -9,7 +9,7 @@ import CurrentAmountCounter from './CurrentAmountCounter';
 import TimerOptions from './TimerOptions'
 
 
-export default function EarningsTimer({timerName = "No Name"}) {
+export default function EarningsTimer({id, onDelete, timerName = "No Name"}) {
   const [currentAmount, setCurrentAmount] = useState(0);
   const options = useTimerOptions({});
   const {
@@ -58,6 +58,12 @@ export default function EarningsTimer({timerName = "No Name"}) {
                 </Icon>
               </Button>
               <TimerOptions {...options} />
+              <Button color="danger" size="small"
+                      onClick={() => onDelete(id)}>
+                <Icon size="small">
+                  <FontAwesomeIcon icon={faTrashAlt}/>
+                </Icon>
+              </Button>
             </Button.Group>
           </Block>
         </Box>
