@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Column, Section, Button, Icon} from 'rbx';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
@@ -12,19 +12,19 @@ export default function TimerGrid() {
   const [timerCount, setTimerCount] = useState(1)
 
 
-  const handleAdd = () => {
+  const handleAdd = useCallback(() => {
     setTimers([...timers, {id: uuidv4(), name: `Timer ${timerCount + 1}`}])
     setTimerCount(timerCount + 1)
-  }
+  }, [timerCount, timers])
 
-  const handleDelete = id => {
+  const handleDelete = useCallback(id => {
     setTimers(timers.filter(t => t.id !== id))
-  }
+  }, [timers])
 
   return (
       <Section>
         <Column.Group vcentered multiline>
-          {timers && timers.map(t => (
+          {timers.map(t => (
             <EarningsTimer key={t.id} id={t.id} onDelete={handleDelete} timerName={t.name}/>
           ))}
           <Column desktop={{size: 3}} fullhd={{size: 2}}>
