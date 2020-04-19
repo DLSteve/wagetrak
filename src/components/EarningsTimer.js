@@ -26,8 +26,6 @@ const EarningsTimer = memo(({id, onDelete, timerName = "No Name"}) => {
     setCurrentAmount(ratePerSecond * Math.floor(seconds))
   }, [options.exchangeRate, options.rate, seconds]);
 
-  console.log("render " + id)
-
   return (
       <Column desktop={{size: 3}} fullhd={{size: 2}}>
         <Box>
