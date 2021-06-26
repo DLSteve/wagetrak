@@ -18,6 +18,9 @@ export default function useTimerOptions({defaultBaseCurrency = 'USD', defaultExc
         .then((data) => {
           setExchangeRate(data.rates[exchange])
         })
+        .catch((e) => {
+          console.log(e)
+        })
   }, [])
 
   useEffect(() => {
